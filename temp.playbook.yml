@@ -1,0 +1,30 @@
+---
+- name: example playbook
+  hosts: all
+  vars:
+    myvar: "example text"
+    mybool: false
+    mycities:
+      - New York
+      - Paris
+
+  tasks:
+    - name: print var
+      ansible.builtin.debug:
+        msg: "value {{ myvar }}"
+      notify: reload
+
+    - name: condition
+      ansible.builtin.debug:
+        msg: "example condition"
+      when: mybool
+
+    - name: print cities
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ mycities }}"
+
+  handlers:
+    - name: reload
+      ansible.builtin.debug:
+        msg: "example handler"
